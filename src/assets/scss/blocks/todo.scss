@@ -1,0 +1,238 @@
+.todo {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&__block {
+		width: 600px;
+		padding: 25px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__title h1{
+		color: #FFFFFF;
+		font-size: 38px;
+		font-weight: 700;
+		letter-spacing: 16px;
+		margin-top: 8px;
+	}
+
+	&__theme-btn {
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition:  all 0.1s;
+
+		&:hover {
+			 opacity: 0.6;
+		}
+	}
+
+	&__create {
+		width: 100%;
+		height: 65px;
+		margin-top: 38px;
+		border-radius: 5px;
+		background: hsl(235, 24%, 19%);
+		padding: 10px 25px;
+	}
+
+	&__create-container {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		position: relative;
+
+		&:hover > .todo__delete-btn {
+			display: block;
+		}
+	}
+
+	&__check {
+		opacity: 0;
+		position: absolute;
+
+		&:checked {
+			& ~ .todo__false-check {
+				background: linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+
+				&:before {background: transparent}
+			}
+
+			& ~ .todo__false-check > svg {
+				display: block;
+			}
+			
+			& ~ .todo__text {
+				color: #525463;
+				text-decoration: line-through;
+			}
+		}
+	}
+
+	&__false-check {
+		position: relative;
+		width: 25px;
+		height: 25px;
+		border: 1px solid hsla(234, 39%, 85%, 0.5);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: hsl(235, 24%, 19%);
+		z-index: 2;
+		cursor: pointer;
+		transition: all 0.1s;
+
+		& > svg {
+			width: 10px;
+			display: none;
+		}
+
+		&:hover {
+			background: linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+			&:before {
+				content:  "";
+				position: absolute;
+				top: 1px;
+				right: 1px;
+				bottom: 1px;
+				left: 1px;
+				background: hsl(235, 24%, 19%);
+				z-index: 0;
+				border-radius: 50%;
+			}
+		}
+	}
+
+	&__input {
+		width: 95%;
+		font-size: 18px;
+		color: hsl(234, 39%, 85%);
+		padding: 5px 25px;
+		font-family: $mainFont;
+		font-weight: $regularWeight;
+
+		&:focus::-webkit-input-placeholder {
+			color: transparent;
+		}
+
+		&:focus::-moz-placeholder          {
+			color: transparent;
+		}
+
+		&:focus:-moz-placeholder           {
+			color: transparent;
+		}
+
+		&:focus:-ms-input-placeholder      {
+			color: transparent;
+		}
+	}
+
+	&__control {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		color: #525463;
+		padding: 20px 25px;
+
+	}
+
+	&__foot {
+		display: flex;
+		align-items: baseline;
+		justify-content: center;
+		text-align: center;
+		font-size: 14px;
+		color: #525463;
+		margin-top: 50px;
+	}
+
+	&__content {
+		background: hsl(235, 24%, 19%);
+		border-radius: 5px;
+		margin-top: 25px;
+	}
+
+	&__item {
+		width: 100%;
+		height: 65px;
+		border-bottom: 1px solid #37394E;
+		padding: 10px 25px;
+
+		&.active {
+			& ~ .todo__false-check {
+				background: linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+
+				&:before {background: transparent}
+			}
+
+			& ~ .todo__false-check > svg {
+				display: block;
+			}
+
+			& ~ .todo__text {
+				color: #525463;
+				text-decoration: line-through;
+			}
+		}
+	}
+
+	&__text {
+		//width: 100%;
+		font-size: 18px;
+		color: hsl(234, 39%, 85%);
+		padding: 5px 25px;
+		font-family: $mainFont;
+		font-weight: $regularWeight;
+		cursor: pointer;
+	}
+
+	&__delete-btn {
+		position: absolute;
+		right: -10px;
+		width: 50px;
+		height: 50px;
+		cursor: pointer;
+		display: none;
+		transition: all 0.1s;
+
+		&:hover {
+			& > svg path {
+				transition: all 0.1s;
+				fill: #CCCFE2;
+			}
+		}
+	}
+}
+
+.btn {
+	color: #525463;
+	cursor: pointer;
+	transition: all 0.1s;
+	font-family:$mainFont;
+	font-size: 14px;
+
+	&:hover {
+		color: #CCCFE2;
+	}
+
+	&.active {
+		color: #4F74CD;
+		cursor: default;
+	}
+}

@@ -5,12 +5,14 @@
 
 	&.dark {
 		background: hsl(235, 21%, 11%);
+		z-index: -3;
 
 		& .background__img {
 			background: url("/assets/img/bg-desktop-dark.jpg");
 			background-repeat: no-repeat;
 			background-size: cover;
 			background-position: left center;
+			z-index: -1;
 		}
 	}
 

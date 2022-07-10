@@ -1,12 +1,14 @@
 @import "utils/fonts";
 @import "utils/reset";
 @import "utils/vars";
+@import "blocks/todo";
 
 @import "blocks/background";
 
 body {
 	width: 100%;
-	height: 100%;
+	height: 100vh;
+	font-family: "Josefin Sans";
 }
 
 #app {
