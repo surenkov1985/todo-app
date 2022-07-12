@@ -2,13 +2,14 @@
 @import "utils/reset";
 @import "utils/vars";
 @import "blocks/todo";
+@import "utils/dark-theme";
 
 @import "blocks/background";
 
 body {
 	width: 100%;
 	height: 100vh;
-	font-family: "Josefin Sans";
+	font-family: $mainFont;
 }
 
 #app {

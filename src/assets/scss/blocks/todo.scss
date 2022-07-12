@@ -45,7 +45,7 @@
 		height: 65px;
 		margin-top: 38px;
 		border-radius: 5px;
-		background: hsl(235, 24%, 19%);
+		background: #FFFFFF;
 		padding: 10px 25px;
 	}
 
@@ -77,7 +77,7 @@
 			}
 			
 			& ~ .todo__text {
-				color: #525463;
+				color: #D2D1D6;
 				text-decoration: line-through;
 			}
 		}
@@ -87,15 +87,14 @@
 		position: relative;
 		width: 25px;
 		height: 25px;
-		border: 1px solid hsla(234, 39%, 85%, 0.5);
+		border: 1px solid #EFEFF1;
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: hsl(235, 24%, 19%);
+		background: #FFFFFF;
 		z-index: 2;
 		cursor: pointer;
-		transition: all 0.1s;
 
 		& > svg {
 			width: 10px;
@@ -103,7 +102,7 @@
 		}
 
 		&:hover {
-			background: linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+			background: linear-gradient(135deg, #57ddff,#c058f3);
 			&:before {
 				content:  "";
 				position: absolute;
@@ -111,7 +110,7 @@
 				right: 1px;
 				bottom: 1px;
 				left: 1px;
-				background: hsl(235, 24%, 19%);
+				background: #FFFFFF;
 				z-index: 0;
 				border-radius: 50%;
 			}
@@ -121,7 +120,7 @@
 	&__input {
 		width: 95%;
 		font-size: 18px;
-		color: hsl(234, 39%, 85%);
+		color: #525463;
 		padding: 5px 25px;
 		font-family: $mainFont;
 		font-weight: $regularWeight;
@@ -147,7 +146,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		color: #525463;
+		color: #96959B;
 		padding: 20px 25px;
 
 	}
@@ -158,12 +157,13 @@
 		justify-content: center;
 		text-align: center;
 		font-size: 14px;
-		color: #525463;
+		color: #97969B;
 		margin-top: 50px;
 	}
 
 	&__content {
-		background: hsl(235, 24%, 19%);
+		background: #FFFFFF;
+		box-shadow: 0px 3px 10px 0px rgba(34, 60, 80, 0.09);
 		border-radius: 5px;
 		margin-top: 25px;
 	}
@@ -171,22 +171,22 @@
 	&__item {
 		width: 100%;
 		height: 65px;
-		border-bottom: 1px solid #37394E;
+		border-bottom: 1px solid #E6E5EA;
 		padding: 10px 25px;
 
 		&.active {
-			& ~ .todo__false-check {
+			& .todo__false-check {
 				background: linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
 
 				&:before {background: transparent}
 			}
 
-			& ~ .todo__false-check > svg {
+			& .todo__false-check > svg {
 				display: block;
 			}
 
-			& ~ .todo__text {
-				color: #525463;
+			& .todo__text {
+				color: #D2D1D6;
 				text-decoration: line-through;
 			}
 		}
@@ -195,7 +195,7 @@
 	&__text {
 		//width: 100%;
 		font-size: 18px;
-		color: hsl(234, 39%, 85%);
+		color: #4C4B5B;
 		padding: 5px 25px;
 		font-family: $mainFont;
 		font-weight: $regularWeight;
@@ -211,6 +211,10 @@
 		display: none;
 		transition: all 0.1s;
 
+		& > svg {
+			z-index: -1;
+		}
+
 		&:hover {
 			& > svg path {
 				transition: all 0.1s;
@@ -221,14 +225,14 @@
 }
 
 .btn {
-	color: #525463;
+	color: #97969B;
 	cursor: pointer;
 	transition: all 0.1s;
 	font-family:$mainFont;
 	font-size: 14px;
 
 	&:hover {
-		color: #CCCFE2;
+		color: #525463;
 	}
 
 	&.active {
