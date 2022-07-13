@@ -1,12 +1,34 @@
 import React, {useState, useEffect} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {reorderItem, setOrderItem, setReorderItem, setDeletedItem, deletedItem} from "../stores/actions"
 import Button from "./Button"
 import classNames from "classnames"
 
-export default function TodoList({data, deleteItem, classList, onCheck, category}) {
+export default function TodoList({deleteItem, classList, onCheck, category}) {
 
+	let data = useSelector(state => {
+		const {createItemReducer} = state;
+
+		return createItemReducer.data
+	});
 	const [classes, setClass] = useState(classList);
 	const [todoList, setTodoList] = useState([]);
-	const [currentItem, setCurrentItem] = useState(null)
+
+	let reorderList = useSelector(state => {
+
+		const {createItemReducer} = state;
+
+		return createItemReducer.reorderItem
+	});
+
+	let orderList = useSelector(state => {
+
+		const {createItemReducer} = state;
+
+		return createItemReducer.orderItem
+	});
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {setClass(classList)}, [classList])
 	useEffect(() => {setTodoList(data.filter((item) => {
@@ -24,33 +46,23 @@ export default function TodoList({data, deleteItem, classList, onCheck, category
 
 	}))}, [category, data]);
 
-	function dragStartHandler(e, item) {
+	function dragStartHandler(item) {
 
-		setCurrentItem(item);
+		dispatch(setReorderItem(item));
 	}
 
-	function dragEndHandler(e) {
+	function dragEndHandler() {
 	}
 
 	function dragOverHandler(e) {
 		e.preventDefault();
 	}
 
-	function dropHandler(e, item) {
+	function dropHandler(e,item) {
 		e.preventDefault();
 
-		setTodoList(todoList.map((todo) => {
-
-			if (todo.id === item.id) {
-
-				return {...todo, order: currentItem.order}
-			} else if (todo.id === currentItem.id) {
-
-				return {...todo, order: item.order}
-			}
-
-			return todo;
-		}))
+		dispatch(setOrderItem(item));
+		dispatch(reorderItem(orderList, reorderList));
 	}
 
 	function sortTodoList(a, b) {
@@ -63,6 +75,19 @@ export default function TodoList({data, deleteItem, classList, onCheck, category
 			return -1;
 		}
 	}
+	function deleteItem(key) {
+
+
+		// dispatch(setDeletedItem(key));
+		dispatch(deletedItem(todoList, key))
+
+		// delete data[key];
+		//
+		// setData(data.filter((item) => {
+		//
+		// 	return item.id !== key;
+		// }))
+	}
 
 	return (
 		<ul className="todo__list">
@@ -72,9 +97,9 @@ export default function TodoList({data, deleteItem, classList, onCheck, category
 					<li
 						className={classNames(classes, item.completed)}
 						key={item.id}
-						onDragStart={(e) => {dragStartHandler(e, item)}}
-						onDragLeave={(e) => {dragEndHandler(e)}}
-						onDragEnd={(e) => {dragEndHandler(e)}}
+						onDragStart={() => {dragStartHandler(item)}}
+						onDragLeave={dragEndHandler}
+						onDragEnd={dragEndHandler}
 						onDragOver={(e) => {dragOverHandler(e)}}
 						onDrop={(e) => {dropHandler(e, item)}}
 						draggable>

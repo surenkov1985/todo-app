@@ -1,21 +1,27 @@
 import React, {useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {inputText} from "../stores/actions";
 
 export default function Create({createTodo, onCheck, checked}) {
 
-	const [val, setVal] = useState("");
+	const dispatch = useDispatch();
+	const val = useSelector(state => {
+		const { createItemReducer } = state;
 
+		return createItemReducer.text;
+	});
 
 	function onKeyPress(e) {
 
 		if (e.key === "Enter") {
 
-			setVal("");
+			dispatch(inputText(""));
 		}
 	}
 
 	function onHandler(e) {
 
-		setVal(e.target.value);
+		dispatch(inputText(e.target.value));
 	}
 
 	return (

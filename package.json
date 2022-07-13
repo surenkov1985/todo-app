@@ -61,6 +61,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
+    "uniqid": "^5.4.0",
     "whatwg-fetch": "^3.6.2"
   }
 }

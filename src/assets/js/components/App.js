@@ -1,4 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {toggleClass, createItem, clearActiveItems, deletedItem, setDeletedItem} from "../stores/actions"
+
 import Button from "./Button";
 import Header from "./Header";
 import Create from "./Create";
@@ -6,56 +9,57 @@ import TodoList from "./TodoList";
 
 export default function App() {
 
-	const todos = [
-		{id: "t1", completed: "", order: 1, text: "Complete online JavaScript course"},
-		{id: "t2", completed: "", order: 2,  text: "Jog around the park 3x"},
-		{id: "t3", completed: "", order: 3,  text: "10 minutes meditation"},
-		{id: "t4", completed: "", order: 4,  text: "Read for 1 hour"},
-		{id: "t5", completed: "", order: 5,  text: "Pick up groceries"},
-		{id: "t6", completed: "", order: 6,  text: "Complete Todo App on Frontend Mentor"}
-	];
+	const dispatch = useDispatch();
+
+	let data = useSelector(state => {
+		const {createItemReducer} = state;
+
+		return createItemReducer.data
+	});
 	let itemClass = ["todo__item"];
-	const [data, setData] = useState(todos);
-	const [active, setActive] = useState("");
 	const [itemClasses, setItemClasses] = useState();
 	const [category, setCategory] = useState("all");
 	const [checked, setChecked] = useState(false);
-	const [itemId, setItemId] = useState(`t${data.length + 1}`);
-	const [itemOrder, setItemOrder] = useState(data.length + 1)
 	const [numbItems, setNumbItems] = useState(data.length);
 
-	useEffect(() => {setItemId(`t${data.length + 1}`); setNumbItems(data.length); setItemOrder(data.length + 1)}, [data]);
+	let active = useSelector(state => {
+		const { createItemReducer } = state;
+
+		return createItemReducer.className;
+	});
 
 	function createTodo(e, val) {
 
 		if (e.key === "Enter") {
 
-			if (val.length && checked) {
+			if (val.length) {
 
-				setData([...data, {id: itemId,completed: "active", order: itemOrder,  text: val}]);
+				dispatch(createItem(active, val));
 				setChecked(false);
-			} else if (val.length && !checked) {
-
-				setData([...data, {id: itemId, completed: "", text: val}])
 			}
 		}
 	}
 
 	function deleteItem(key) {
 
-		delete data[key];
 
-		setData(data.filter((item) => {
+		dispatch(setDeletedItem(key));
+		dispatch(deletedItem(data))
 
-			return item.id !== key;
-		}))
+		// delete data[key];
+		//
+		// setData(data.filter((item) => {
+		//
+		// 	return item.id !== key;
+		// }))
 	}
 
 	function onCheck() {
 
 		setChecked(!checked);
-	}
 
+		dispatch(toggleClass(""))
+	}
 	function onItemCheck(e, val) {
 
 		data.map((item) => {
@@ -112,11 +116,7 @@ export default function App() {
 
 	function clearCompletedItems() {
 
-
-		setData(data.filter((item) => {
-
-			return !item.completed.length
-		}))
+		dispatch(clearActiveItems(data))
 	}
 	return (
 		<div className="container">
@@ -133,7 +133,7 @@ export default function App() {
 						</div>
 
 						<div className="todo__content">
-							<TodoList classList={itemClass} data={data} category={category} deleteItem={deleteItem} onCheck={onItemCheck}/>
+							<TodoList classList="todo__item" data={data} category={category} onCheck={onItemCheck}/>
 							<div className="todo__control">
 								<div className="todo__numb">{numbItems} items left</div>
 								<div className="todo__sort">
@@ -154,3 +154,6 @@ export default function App() {
 		</div>
 	)
 }
+
+
+// deleteItem={deleteItem}
