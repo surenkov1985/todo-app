@@ -53,7 +53,6 @@ export default function App() {
 	}
 
 	function onItemCheck(e, id) {
-		console.log(e.target.checked)
 		dispatch(toggleItemClass(e.target.checked, id))
 	}
 

@@ -47,7 +47,6 @@ export const createItemReducer = (state = initialState, action) => {
 				}
 			};
 		case TOGGLE_ITEM_CLASS:
-			console.log(action)
 			return {...state,
 				data: state.data.map((item) => {
 					if (action.active && item.id === action.id) {
@@ -114,6 +113,7 @@ export const createItemReducer = (state = initialState, action) => {
 					return todo.id !== state.deletedItemId
 				}),
 			};
+		case SET_NUMB_ITEMS:
 			return {
 				...state,
 				numbItems: action.numbItems !== undefined ? action.numbItems : state.data.length
