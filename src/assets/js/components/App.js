@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {toggleClass, createItem, clearActiveItems, deletedItem, setDeletedItem} from "../stores/actions"
+import {toggleClass, toggleItemClass, createItem, clearActiveItems, deletedItem, setDeletedItem, setNumbItems} from "../stores/actions"
 
 import Button from "./Button";
 import Header from "./Header";
@@ -16,11 +16,18 @@ export default function App() {
 
 		return createItemReducer.data
 	});
-	let itemClass = ["todo__item"];
-	const [itemClasses, setItemClasses] = useState();
+
+	let numbItems = useSelector(state => {
+		const {createItemReducer} = state;
+
+		return createItemReducer.numbItems
+	});
+
 	const [category, setCategory] = useState("all");
+	const [onAllCategory, setOnAllCategory] = useState("active");
+	const [onCompletedCategory, setOnCompletedCategory] = useState("");
+	const [onActiveCategory, setOnActiveCategory] = useState("all");
 	const [checked, setChecked] = useState(false);
-	const [numbItems, setNumbItems] = useState(data.length);
 
 	let active = useSelector(state => {
 		const { createItemReducer } = state;
@@ -29,59 +36,33 @@ export default function App() {
 	});
 
 	function createTodo(e, val) {
+		e.preventDefault();
 
-		if (e.key === "Enter") {
+		if (val.length) {
 
-			if (val.length) {
-
-				dispatch(createItem(active, val));
-				setChecked(false);
-			}
+			dispatch(createItem(active, val));
+			setChecked(false);
+			dispatch(setNumbItems());
 		}
-	}
-
-	function deleteItem(key) {
-
-
-		dispatch(setDeletedItem(key));
-		dispatch(deletedItem(data))
-
-		// delete data[key];
-		//
-		// setData(data.filter((item) => {
-		//
-		// 	return item.id !== key;
-		// }))
 	}
 
 	function onCheck() {
 
 		setChecked(!checked);
-
-		dispatch(toggleClass(""))
+		dispatch(toggleClass(checked))
 	}
-	function onItemCheck(e, val) {
 
-		data.map((item) => {
-
-			if (item.text === val && e.target.checked) {
-
-				item.completed = "active";
-
-
-			} else if (item.text === val && !e.target.checked) {
-
-				item.completed = "";
-			}
-
-			setItemClasses([...itemClass, item.completed]);
-		});
+	function onItemCheck(e, id) {
+		console.log(e.target.checked)
+		dispatch(toggleItemClass(e.target.checked, id))
 	}
 
 	function setDataCompleted() {
 
 		setCategory("completed");
-
+		setOnAllCategory("");
+		setOnActiveCategory("");
+		setOnCompletedCategory("active");
 		let counter = 0;
 
 		data.map((item) => {
@@ -89,14 +70,15 @@ export default function App() {
 			if (item.completed === "active") counter++
 		});
 
-		setNumbItems(counter);
-
+		dispatch(setNumbItems(counter));
 	}
 
 	function setDataActive() {
 
 		setCategory("active");
-
+		setOnAllCategory("");
+		setOnActiveCategory("active");
+		setOnCompletedCategory("");
 		let counter = 0;
 
 		data.map((item) => {
@@ -104,19 +86,29 @@ export default function App() {
 			if (!item.completed.length) counter++
 		});
 
-		setNumbItems(counter);
+		dispatch(setNumbItems(counter));
 	}
 
 	function setDataAll() {
 
 		setCategory("all");
+		setOnAllCategory("active");
+		setOnActiveCategory("");
+		setOnCompletedCategory("");
+		dispatch(setNumbItems(data.length));
+	}
 
-		setNumbItems(data.length);
+	function deleteItem(key, arr) {
+
+		dispatch(setDeletedItem(key));
+		dispatch(deletedItem(arr, key));
+		dispatch(setNumbItems());
 	}
 
 	function clearCompletedItems() {
 
-		dispatch(clearActiveItems(data))
+		dispatch(clearActiveItems(data));
+		dispatch(setNumbItems());
 	}
 	return (
 		<div className="container">
@@ -133,13 +125,13 @@ export default function App() {
 						</div>
 
 						<div className="todo__content">
-							<TodoList classList="todo__item" data={data} category={category} onCheck={onItemCheck}/>
+							<TodoList classList="todo__item" data={data} category={category} onCheck={onItemCheck} deleteItem={deleteItem}/>
 							<div className="todo__control">
 								<div className="todo__numb">{numbItems} items left</div>
 								<div className="todo__sort">
-									<Button classList={["todo__sort-all", "btn", "active"]} text="All" onClick={setDataAll}/>
-									<Button classList={["todo__sort-active", "btn"]} text="Active" onClick={setDataActive}/>
-									<Button classList={["todo__sort-completed", "btn"]} text="Completed" onClick={setDataCompleted}/>
+									<Button classList={["todo__sort-all", "btn", onAllCategory]} text="All" onClick={setDataAll}/>
+									<Button classList={["todo__sort-active", "btn", onActiveCategory]} text="Active" onClick={setDataActive}/>
+									<Button classList={["todo__sort-completed", "btn", onCompletedCategory]} text="Completed" onClick={setDataCompleted}/>
 								</div>
 								<div className="todo__clear">
 									<Button classList={["todo__clear-btn", "btn"]} text="Clear completed" onClick={clearCompletedItems}/>
@@ -154,6 +146,3 @@ export default function App() {
 		</div>
 	)
 }
-
-
-// deleteItem={deleteItem}

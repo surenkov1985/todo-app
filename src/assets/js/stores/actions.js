@@ -1,4 +1,4 @@
-import {THEME_TOGGLE, CREATE_ITEM, INPUT_TEXT, TOGGLE_CLASS, REORDER_ITEMS, SET_ORDER_ITEMS, SET_REORDER_ITEMS, CLEAR_ACTIVE_ITEMS, DELETE_ITEM, SET_DELETE_ITEM} from "./types"
+import {THEME_TOGGLE, CREATE_ITEM, INPUT_TEXT, TOGGLE_CLASS, TOGGLE_ITEM_CLASS, REORDER_ITEMS, SET_ORDER_ITEMS, SET_REORDER_ITEMS, CLEAR_ACTIVE_ITEMS, DELETE_ITEM, SET_DELETE_ITEM, SET_NUMB_ITEMS} from "./types"
 
 export const themeToggle = () => { return {type: THEME_TOGGLE} };
 
@@ -17,11 +17,19 @@ export const createItem = (className, text) => {
 		text
 	}
 };
-export const toggleClass = (className) => {
+export const toggleClass = (active) => {
 
 	return {
 		type: TOGGLE_CLASS,
-		className
+		active
+	}
+};
+
+export const toggleItemClass = (active, id) => {
+
+	return {
+		type: TOGGLE_ITEM_CLASS,
+		active, id
 	}
 };
 
@@ -55,19 +63,26 @@ export const clearActiveItems = (data) => {
 		type: CLEAR_ACTIVE_ITEMS,
 		data
 	}
-}
+};
 export const setDeletedItem = (deletedItemId) => {
 
 	return {
 		type: SET_DELETE_ITEM,
 		deletedItemId
 	}
-}
+};
 export const deletedItem = (data, deletedItemId) => {
 
 	return {
 		type: DELETE_ITEM,
-		data,
-		deletedItemId
+		deletedItemId,
+		data
 	}
-}
+};
+export const setNumbItems = (numbItems) => {
+
+	return {
+		type: SET_NUMB_ITEMS,
+		numbItems
+	}
+};
