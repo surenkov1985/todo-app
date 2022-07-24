@@ -38,6 +38,7 @@ export default function App() {
 	function createTodo(e, val) {
 		e.preventDefault();
 
+		console.log(e)
 		if (val.length) {
 
 			dispatch(createItem(active, val));
@@ -54,7 +55,7 @@ export default function App() {
 
 	function onItemCheck(e, id) {
 
-		dispatch(toggleItemClass(e.target.checked, id))
+		dispatch(toggleItemClass(e, id))
 	}
 
 	function setDataCompleted() {

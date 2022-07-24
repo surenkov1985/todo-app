@@ -50,17 +50,17 @@ export const createItemReducer = (state = initialState, action) => {
 		case TOGGLE_ITEM_CLASS:
 			return {...state,
 				data: state.data.map((item) => {
-					if (action.active && item.id === action.id) {
+					if (!action.active && item.id === action.id) {
 
-						return {...item, completed: "active", checked: action.active}
-					} else if (!action.active && item.id === action.id) {
+						return {...item, completed: "active", checked: !action.active}
+					} else if (action.active && item.id === action.id) {
 
-						return {...item, completed: "", checked: action.active}
+						return {...item, completed: "", checked: !action.active}
 					}
 
 					return item
 				}),
-				active: !state.active
+				active: !action.active
 			};
 		case CREATE_ITEM:
 			return {
