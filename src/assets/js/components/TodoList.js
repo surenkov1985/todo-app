@@ -11,7 +11,6 @@ export default function TodoList({deleteItem, classList, onCheck, category}) {
 
 		return createItemReducer.data
 	});
-	const [classes, setClass] = useState(classList);
 	const [todoList, setTodoList] = useState(data);
 
 	let reorderList = useSelector(state => {
@@ -30,7 +29,6 @@ export default function TodoList({deleteItem, classList, onCheck, category}) {
 
 	const dispatch = useDispatch();
 
-	useEffect(() => {setClass(classList)}, [classList]);
 	useEffect(() => {setTodoList(data.filter((item) => {
 
 		if (category === "all") {
@@ -49,9 +47,6 @@ export default function TodoList({deleteItem, classList, onCheck, category}) {
 	function dragStartHandler(item) {
 
 		dispatch(setReorderItem(item));
-	}
-
-	function dragEndHandler() {
 	}
 
 	function dragOverHandler(e) {
@@ -74,13 +69,11 @@ export default function TodoList({deleteItem, classList, onCheck, category}) {
 						className={classNames(classList, item.completed)}
 						key={item.id}
 						onDragStart={() => {dragStartHandler(item)}}
-						onDragLeave={dragEndHandler}
-						onDragEnd={dragEndHandler}
 						onDragOver={(e) => {dragOverHandler(e)}}
 						onDrop={(e) => {dropHandler(e, item)}}
 						draggable>
 						<label className="todo__create-container">
-							<input type="checkbox" className="todo__check"  onClick={(e) => onCheck(e, item.id)}/>
+							<input type="checkbox" className="todo__check" defaultChecked={item.checked} onClick={(e) => onCheck(e, item.id)}/>
 							<div className="todo__false-check">
 							<svg xmlns="http://www.w3.org/2000/svg" width="11" height="9"><path fill="none" stroke="#FFF" strokeWidth="2" d="M1 4.304L3.696 7l6-6"/></svg>
 							</div>

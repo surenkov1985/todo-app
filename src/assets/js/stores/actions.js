@@ -47,7 +47,7 @@ export const setReorderItem = (reorderItem) => {
 		type: SET_REORDER_ITEMS,
 		reorderItem
 	}
-}
+};
 export const reorderItem = (orderItem, reorderItem) => {
 
 	return {

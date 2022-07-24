@@ -3,12 +3,12 @@ import React from "react"
 import uniqid from "uniqid"
 
 const todos = [
-		{id: uniqid(), completed: "", text: "Complete online JavaScript course"},
-		{id: uniqid(), completed: "", text: "Jog around the park 3x"},
-		{id: uniqid(), completed: "", text: "10 minutes meditation"},
-		{id: uniqid(), completed: "", text: "Read for 1 hour"},
-		{id: uniqid(), completed: "", text: "Pick up groceries"},
-		{id: uniqid(), completed: "", text: "Complete Todo App on Frontend Mentor"}
+		{id: uniqid(), completed: "", checked: false, text: "Complete online JavaScript course"},
+		{id: uniqid(), completed: "", checked: false, text: "Jog around the park 3x"},
+		{id: uniqid(), completed: "", checked: false, text: "10 minutes meditation"},
+		{id: uniqid(), completed: "", checked: false, text: "Read for 1 hour"},
+		{id: uniqid(), completed: "", checked: false, text: "Pick up groceries"},
+		{id: uniqid(), completed: "", checked: false, text: "Complete Todo App on Frontend Mentor"}
 	];
 
 const initialState = {
@@ -37,13 +37,14 @@ export const createItemReducer = (state = initialState, action) => {
 		case TOGGLE_CLASS:
 			if ( !action.active) {
 				return {...state,
-					className: state.className = "active"
-
+					className: state.className = "active",
+					active: action.active
 				}
 			} else {
 				return {
 					...state,
-					className: state.className = ""
+					className: state.className = "",
+					active: action.active
 				}
 			};
 		case TOGGLE_ITEM_CLASS:
@@ -51,19 +52,20 @@ export const createItemReducer = (state = initialState, action) => {
 				data: state.data.map((item) => {
 					if (action.active && item.id === action.id) {
 
-						return {...item, completed: "active"}
+						return {...item, completed: "active", checked: action.active}
 					} else if (!action.active && item.id === action.id) {
 
-						return {...item, completed: ""}
+						return {...item, completed: "", checked: action.active}
 					}
 
 					return item
-				})
+				}),
+				active: !state.active
 			};
 		case CREATE_ITEM:
 			return {
 				...state,
-				data: [...state.data, {id:  uniqid(),  completed: action.className, text: action.text}],
+				data: [...state.data, {id:  uniqid(), checked: state.active, completed: action.className, text: action.text}],
 				className: state.className = ""
 			};
 		case SET_REORDER_ITEMS:
