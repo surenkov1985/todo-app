@@ -139,6 +139,13 @@ export default function App() {
 								</div>
 							</div>
 						</div>
+						<div className="todo__control-false">
+							<div className="todo__sort-false">
+								<Button classList={["todo__sort-all", "btn", onAllCategory]} text="All" onClick={setDataAll}/>
+								<Button classList={["todo__sort-active", "btn", onActiveCategory]} text="Active" onClick={setDataActive}/>
+								<Button classList={["todo__sort-completed", "btn", onCompletedCategory]} text="Completed" onClick={setDataCompleted}/>
+							</div>
+						</div>
 					</div>
 
 					<div className="todo__foot">Drag and drop to reorder list</div>

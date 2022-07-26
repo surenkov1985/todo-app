@@ -10,6 +10,10 @@
 		padding: 25px;
 		display: flex;
 		flex-direction: column;
+
+		@media (max-width: 460px) {
+			padding: 15px;
+		}
 	}
 
 	&__head {
@@ -24,6 +28,10 @@
 		font-weight: 700;
 		letter-spacing: 16px;
 		margin-top: 8px;
+
+		@media (max-width: 460px) {
+			font-size: 30px;
+		}
 	}
 
 	&__theme-btn {
@@ -108,6 +116,16 @@
 		z-index: 2;
 		cursor: pointer;
 
+		@media (max-width: 460px) {
+			width: 20px;
+			height: 20px;
+
+			& > svg {
+				width: 8px;
+				height: 8px;
+			}
+		}
+
 		& > svg {
 			width: 10px;
 			display: none;
@@ -132,7 +150,7 @@
 	&__input {
 		width: 95%;
 		height: 100%;
-		font-size: 18px;
+		font-size: $mainFontSize;
 		color: #525463;
 		padding: 0 25px;
 		font-family: $mainFont;
@@ -140,6 +158,10 @@
 
 		@media (max-width: 500px) {
 			padding: 0 15px;
+		}
+		@media (max-width: 460px) {
+			font-size: 14px;
+			padding: 0 5px;
 		}
 
 		&:focus::-webkit-input-placeholder {
@@ -165,7 +187,22 @@
 		justify-content: space-between;
 		color: #96959B;
 		padding: 20px 25px;
+	}
 
+	&__control-false {
+		display: none;
+		align-items: flex-start;
+		justify-content: center;
+		color: #96959B;
+		padding: 20px 25px;
+		background: #FFFFFF;
+		box-shadow: 0px 3px 10px 0px rgba(34, 60, 80, 0.09);
+		border-radius: 5px;
+		margin-top: 25px;
+
+		@media (max-width: 460px) {
+			display: flex;
+		}
 	}
 
 	&__foot {
@@ -197,6 +234,10 @@
 			padding: 10px 15px;
 		}
 
+		@media (max-width: 460px) {
+			min-height: 60px;
+		}
+
 		&.active {
 			& .todo__false-check {
 				background: linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
@@ -216,7 +257,7 @@
 	}
 
 	&__text {
-		font-size: 18px;
+		font-size: $mainFontSize;
 		color: #4C4B5B;
 		padding: 5px 25px;
 		font-family: $mainFont;
@@ -225,6 +266,11 @@
 
 		@media (max-width: 500px) {
 			padding: 0px 15px;
+		}
+
+		@media (max-width: 460px) {
+			font-size: 13px;
+			padding: 0px 5px;
 		}
 	}
 
@@ -239,6 +285,10 @@
 
 		& > svg {
 			z-index: -1;
+
+			@media (max-width: 460px) {
+				transform: scale(0.7);
+			}
 		}
 
 		&:hover {
@@ -250,12 +300,30 @@
 	}
 
 	&__sort {
+		 display: flex;
+		 align-items: center;
+
+		 @media (max-width: 460px) {
+			 display: none;
+			 flex-direction: column;
+			 row-gap: 5px;
+		 }
+	}
+
+	&__sort-false {
 		display: flex;
 		align-items: center;
 
+		& .btn {
+			font-size: 16px;
+		}
+	}
+
+	&__numb {
+		font-size: 14px;
+
 		@media (max-width: 460px) {
-			flex-direction: column;
-			row-gap: 5px;
+			font-size: 13px;
 		}
 	}
 }
@@ -266,6 +334,10 @@
 	transition: all 0.1s;
 	font-family:$mainFont;
 	font-size: 14px;
+
+	@media (max-width: 460px) {
+		font-size: 13px;
+	}
 
 	&:hover {
 		color: #525463;
